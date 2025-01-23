@@ -149,7 +149,7 @@ set -e
 
 echo 'Dereferencing bazel runfiles symlinks for accurate SCM resolution...'
 
-for f in "${srcs[@]}" "${test_srcs[@]}"
+for f in {srcs} {test_srcs}
 do
     mkdir -p "$(dirname "orig/$f")"
     mv "$f" "orig/$f"
