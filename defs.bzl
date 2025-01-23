@@ -151,9 +151,9 @@ echo 'Dereferencing bazel runfiles symlinks for accurate SCM resolution...'
 
 for f in {srcs} {test_srcs}
 do
-    mkdir -p "$(dirname "orig/$f")"
-    mv "$f" "orig/$f"
-    cp -L "orig/$f" "$f"
+    mkdir -p $(dirname orig/$f)
+    mv $f orig/$f
+    cp -L orig/$f $f
 done
 
 echo '... done.'
@@ -197,15 +197,16 @@ def _sonarqube_impl(ctx):
         for t in module[SqProjectInfo].test_srcs:
             for f in t[DefaultInfo].files.to_list():
                 test_src_paths.append(f.short_path)
+    _content = _sonarqube_template.format(
+        sq_properties_file = sq_properties_file.short_path,
+        sonar_scanner = ctx.executable.sonar_scanner.short_path,
+        srcs = " ".join(src_paths).replace("$", "\\$"),
+        test_srcs = " ".join(test_src_paths),
+    )
 
     ctx.actions.write(
         output = ctx.outputs.executable,
-        content = _sonarqube_template.format(
-            sq_properties_file = sq_properties_file.short_path,
-            sonar_scanner = ctx.executable.sonar_scanner.short_path,
-            srcs = " ".join(src_paths),
-            test_srcs = " ".join(test_src_paths),
-        ),
+        content = _content,
         is_executable = True,
     )
 
