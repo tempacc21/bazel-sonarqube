@@ -20,6 +20,7 @@ def sonarqube_coverage_generator_binary(name = None):
         ],
         main_class = "com.google.devtools.coverageoutputgenerator.SonarQubeCoverageGenerator",
         deps = deps,
+        visibility = ["//visibility:public"],
     )
 
 TargetInfo = provider(
