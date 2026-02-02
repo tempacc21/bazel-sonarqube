@@ -170,6 +170,14 @@ rm -rf orig
 echo '... done.'
 """
 
+
+def _escape_chars_in_file_name(file_paths):
+    _ESCAPE_CHARS = ["$"]
+    result = " ".join(file_paths)
+    for char in _ESCAPE_CHARS:
+        result = result.replace(char, "\\" + char)
+    return result
+
 def _sonarqube_impl(ctx):
     sq_properties_file = ctx.actions.declare_file("sonar-project.properties")
 
@@ -200,8 +208,8 @@ def _sonarqube_impl(ctx):
     _content = _sonarqube_template.format(
         sq_properties_file = sq_properties_file.short_path,
         sonar_scanner = ctx.executable.sonar_scanner.short_path,
-        srcs = " ".join(src_paths).replace("$", "\\$"),
-        test_srcs = " ".join(test_src_paths),
+        srcs = _escape_chars_in_file_name(src_paths),
+        test_srcs = _escape_chars_in_file_name(test_src_paths),
     )
 
     ctx.actions.write(
