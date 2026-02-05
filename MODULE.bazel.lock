@@ -195,7 +195,7 @@
     "//:extensions.bzl%non_module_dependencies": {
       "general": {
         "bzlTransitiveDigest": "VV+XCP/3RMOXXhosaLDFHB30/HNiM5G5kLe8TzXbjB4=",
-        "usagesDigest": "X2zp652j6ZUA7k1lVfj4Fwo3TVUQ3F9Xt/k2Wo3TBHY=",
+        "usagesDigest": "fnvam0ixIrCQaE6xiL1IBwbymrpTPCXU93BJ+HWdnyg=",
         "recordedInputs": [
           "REPO_MAPPING:,bazel_tools bazel_tools"
         ],
