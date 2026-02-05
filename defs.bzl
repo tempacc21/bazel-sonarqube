@@ -2,8 +2,8 @@
 Rules to analyse Bazel projects with SonarQube.
 """
 
-load("@bazel_version//:bazel_version.bzl", "bazel_version")
 load("@bazel_skylib//lib:versions.bzl", "versions")
+load("@bazel_version//:bazel_version.bzl", "bazel_version")
 load("@rules_java//java:defs.bzl", "JavaInfo", "java_binary")
 
 def sonarqube_coverage_generator_binary(name = None):
@@ -233,7 +233,7 @@ _sonarqube = rule(
     attrs = dict(_COMMON_ATTRS, **{
         "coverage_report": attr.label(allow_single_file = True, mandatory = False),
         "scm_info": attr.label_list(allow_files = True),
-        "sonar_scanner": attr.label(executable = True, default = "@bazel_sonarqube//:sonar_scanner", cfg = "host"),
+        "sonar_scanner": attr.label(executable = True, default = "@bazel_sonarqube//:sonar_scanner", cfg = "exec"),
     }),
     fragments = ["jvm"],
     host_fragments = ["jvm"],

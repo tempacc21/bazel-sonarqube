@@ -15,6 +15,7 @@ bazel_dep(
     version = "3.5.1",
     repo_name = "build_bazel_rules_apple",
 )
+
 bazel_dep(
     name = "buildifier_prebuilt",
     version = "6.3.3",
