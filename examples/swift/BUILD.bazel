@@ -1,9 +1,17 @@
 load("@bazel_sonarqube//:defs.bzl", "sonarqube")
+load(
+    "@rules_xcodeproj//xcodeproj:defs.bzl",
+    "top_level_target",
+    "xcodeproj",
+)
 
 # Generating Sonar coverage report
 filegroup(
     name = "test_reports",
-    srcs = glob(["bazel-testlogs/**/test.xml"], allow_empty = True),
+    srcs = glob(
+        ["bazel-testlogs/**/test.xml"],
+        allow_empty = True,
+    ),
     tags = ["manual"],
 )
 
@@ -15,28 +23,25 @@ filegroup(
 
 filegroup(
     name = "git",
-    srcs = glob([".git/**"], exclude = [".git/**/*[*]"]),
+    srcs = glob(
+        [".git/**"],
+        exclude = [".git/**/*[*]"],
+    ),
     tags = ["manial"],
 )
 
 sonarqube(
     name = "sq",
+    testonly = True,
     srcs = ["//modules/API:sources"],
+    coverage_report = ":coverage_report",
     project_key = "your_sonar_project_key",
     project_name = "Bazel-SwiftUI-template",
-    test_srcs = ["//modules/API:testSources"],
-    test_targets = ["//modules/API:APITestsLib"],
+    scm_info = [":git"],
     sq_properties_template = "sonar-project.properties.tpl",
     test_reports = [":test_reports"],
-    coverage_report = ":coverage_report",
-    scm_info = [":git"],
-    testonly = True,
-)
-
-load(
-    "@rules_xcodeproj//xcodeproj:defs.bzl",
-    "top_level_target",
-    "xcodeproj",
+    test_srcs = ["//modules/API:testSources"],
+    test_targets = ["//modules/API:APITestsLib"],
 )
 
 # Xcode
