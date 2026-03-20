@@ -33,10 +33,10 @@ swift_library(
     testonly = True,
     srcs = [":testSources"],
     module_name = "APITests",
+    visibility = ["//visibility:public"],
     deps = [
         ":APILib",
     ],
-    visibility = ["//visibility:public"],
 )
 
 ios_unit_test(
