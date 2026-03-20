@@ -203,7 +203,7 @@ def _sonarqube_impl(ctx):
         sq_properties_file = sq_properties_file.short_path,
         sonar_scanner = ctx.executable.sonar_scanner.short_path,
         srcs = " ".join(src_paths).replace("$", "\\$"),
-        test_srcs = " ".join(test_src_paths),
+        test_srcs = " ".join(test_src_paths).replace("$", "\\$"),
     )
 
     ctx.actions.write(
